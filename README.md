@@ -306,8 +306,8 @@ return [
 
     ...
 
-    'project' => '项目 :context :name',
-    'component_template' => '组件模板 :context :name',
+    'project' => '项目',
+    'component_template' => '组件模板',
 ];
 
 ```
