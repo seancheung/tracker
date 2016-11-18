@@ -163,16 +163,16 @@ use Agent { records as logs; }
 
 The default strcuture of a record
 
-|     Field    |         Type         | Nullable |
-|:------------:|:--------------------:|:--------:|
-|      id      | big unsigned integer |     N    |
-|  context_id  |   unsigned integer   |     N    |
-| context_type |        string        |     N    |
-|   agent_id   |   unsigned integer   |     Y    |
-|  agent_type  |        string        |     Y    |
-|    message   |        string        |     N    |
-|     meta     |         text         |     Y    |
-| performed_at |       timestamp      |     N    |
+|    Field     |         Type         | Nullable |
+| :----------: | :------------------: | :------: |
+|      id      | big unsigned integer |    N     |
+|  context_id  |   unsigned integer   |    N     |
+| context_type |        string        |    N     |
+|   agent_id   |   unsigned integer   |    Y     |
+|  agent_type  |        string        |    Y     |
+|   message    |        string        |    N     |
+|     meta     |         text         |    Y     |
+| performed_at |      timestamp       |    N     |
 
 The `message` filed is the action message in brief. examples
 
@@ -306,10 +306,9 @@ return [
 
     ...
 
-    'project' => '项目 :context :name',
-    'component_template' => '组件模板 :context :name',
+    'project' => '项目',
+    'component_template' => '组件模板',
 ];
-
 ```
 
 The `:name` is provided by `Panoscape\LaraTracker\Recordable` interface which we have mentioned above.
