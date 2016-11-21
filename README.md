@@ -1,4 +1,4 @@
-# LaraTracker
+# Tracker
 Eloquent CRUD records tracking for Laravel
 
 ## Installation
@@ -6,7 +6,7 @@ Eloquent CRUD records tracking for Laravel
 You can install this package via composer
 
 ```shel
-composer require panoscape/laratracker
+composer require panoscape/tracker
 ```
 
 First, register service provider
@@ -16,32 +16,32 @@ First, register service provider
 ```php
 'providers' => [
     ...
-    Panoscape\LaraTracker\LaraTrackerServiceProvider::class,
+    Panoscape\Tracker\TrackerServiceProvider::class,
 ];
 ```
 
 Next, you may publish the config file with
 
 ```shell
-php artisan vendor:publish --provider="Panoscape\LaraTracker\LaraTrackerServiceProvider" --tag=config
+php artisan vendor:publish --provider="Panoscape\Tracker\TrackerServiceProvider" --tag=config
 ```
 
 Migration
 
 ```shell
-php artisan vendor:publish --provider="Panoscape\LaraTracker\LaraTrackerServiceProvider" --tag=migrations
+php artisan vendor:publish --provider="Panoscape\Tracker\TrackerServiceProvider" --tag=migrations
 php artisan migrate
 ```
 
 Publish localization
 
 ```shell
-php artisan vendor:publish --provider="Panoscape\LaraTracker\LaraTrackerServiceProvider" --tag=translations
+php artisan vendor:publish --provider="Panoscape\Tracker\TrackerServiceProvider" --tag=translations
 ```
 
 ## Usage
 
-Add `Panoscape\LaraTracker\Context` trait to any model(s) you'd like to track.
+Add `Panoscape\Tracker\Context` trait to any model(s) you'd like to track.
 
 ```php
 <?php
@@ -49,28 +49,9 @@ Add `Panoscape\LaraTracker\Context` trait to any model(s) you'd like to track.
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Panoscape\LaraTracker\Context;
+use Panoscape\Tracker\Context;
 
 class Project extends Model
-{
-    use Context;
-
-    ...
-}
-```
-
-Optionally you can add  `Panoscape\LaraTracker\Recordable` interface to its implements, and implement `getContextLabel` method.
-
-```php
-<?php
-
-namespace App\Models;
-
-use Illuminate\Database\Eloquent\Model;
-use Panoscape\LaraTracker\Context;
-use Panoscape\LaraTracker\Recordable;
-
-class Project extends Model implements Recordable
 {
     use Context;
 
@@ -78,16 +59,16 @@ class Project extends Model implements Recordable
     {
         return $this->display_name;
     }
+
     ...
 }
 ```
+
+Remember that you'll need to implement the abstract `getContextLabel` method from the trait.
 This will add the specified name value to the records.
 
 > Created new Project project_001
 
-If `Panoscape\LaraTracker\Recordable` interface is not found on the model, the record would be
-
-> Created new Project
 
 ### Context
 
@@ -119,7 +100,7 @@ The agent in a record is always got from `Auth`, thus the authorized user when t
 
 You might have multiple user types in your application, and this package take well care of it.
 
-To be able to getting related records from an agent, all you need is to add `Panoscape\LaraTracker\Agent` trait to that model.
+To be able to getting related records from an agent, all you need is to add `Panoscape\Tracker\Agent` trait to that model.
 
 ```php
 <?php
@@ -129,7 +110,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Panoscape\LaraTracker\Agent;
+use Panoscape\Tracker\Agent;
 
 class User extends Authenticatable
 {
@@ -163,16 +144,16 @@ use Agent { records as logs; }
 
 The default strcuture of a record
 
-|     Field    |         Type         | Nullable |
-|:------------:|:--------------------:|:--------:|
-|      id      | big unsigned integer |     N    |
-|  context_id  |   unsigned integer   |     N    |
-| context_type |        string        |     N    |
-|   agent_id   |   unsigned integer   |     Y    |
-|  agent_type  |        string        |     Y    |
-|    message   |        string        |     N    |
-|     meta     |         text         |     Y    |
-| performed_at |       timestamp      |     N    |
+|    Field     |         Type         | Nullable |
+| :----------: | :------------------: | :------: |
+|      id      | big unsigned integer |    N     |
+|  context_id  |   unsigned integer   |    N     |
+| context_type |        string        |    N     |
+|   agent_id   |   unsigned integer   |    Y     |
+|  agent_type  |        string        |    Y     |
+|   message    |        string        |    N     |
+|     meta     |         text         |    Y     |
+| performed_at |      timestamp       |    N     |
 
 The `message` filed is the action message in brief. examples
 
@@ -247,7 +228,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Laratracker Language Lines
+    | Tracker Language Lines
     |--------------------------------------------------------------------------
     |
     | The following language lines are used across application for various
@@ -276,7 +257,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Laratracker Language Lines
+    | Tracker Language Lines
     |--------------------------------------------------------------------------
     |
     | The following language lines are used across application for various
@@ -309,10 +290,9 @@ return [
     'project' => '项目',
     'component_template' => '组件模板',
 ];
-
 ```
 
-The `:name` is provided by `Panoscape\LaraTracker\Recordable` interface which we have mentioned above.
+The `:name` is provided by `getContextLabel` which we have mentioned above.
 
 
 ## Configuration
@@ -340,7 +320,7 @@ return [
     |
     |
     */
-    'records_table' => 'laratracker_records',
+    'records_table' => 'tracker_records',
 
     /*
     |--------------------------------------------------------------

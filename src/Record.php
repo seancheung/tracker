@@ -1,6 +1,6 @@
 <?php
 
-namespace Panoscape\Laratracker;
+namespace Panoscape\Tracker;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -51,7 +51,7 @@ class Record extends Model
      */
     public function __construct(array $attributes = [])
     {
-        $this->setTable(config('laratracker.records_table'));
+        $this->setTable(config('tracker.records_table'));
         parent::__construct($attributes);
     }
 

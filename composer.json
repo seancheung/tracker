@@ -1,8 +1,8 @@
 {
-    "name": "panoscape/laratracker",
+    "name": "panoscape/tracker",
     "description": "Eloquent CRUD records tracking for Laravel",
     "keywords": ["laravel", "log", "history", "tracking", "eloquent", "model"],
-    "homepage": "https://github.com/seancheung/laratracker",
+    "homepage": "https://github.com/seancheung/tracker",
     "require": {
         "php": ">=5.6.4",
         "illuminate/support": "^5.3"
@@ -16,7 +16,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Panoscape\\LaraTracker\\": "src/"
+            "Panoscape\\Tracker\\": "src/"
         }
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Panoscape\LaraTracker;
+namespace Panoscape\Tracker;
 
 trait Agent
 {
