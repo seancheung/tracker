@@ -1,6 +1,6 @@
 <?php
 
-namespace Panoscape\LaraTracker;
+namespace Panoscape\Tracker;
 use App;
 
 trait Context
@@ -15,22 +15,24 @@ trait Context
 
     public static function bootContext()
     {
-        if(!config('laratracker.enabled')) {
+        if(!config('tracker.enabled')) {
             return;
         }
 
-        if(in_array(App::environment(), config('laratracker.env_ignore'))) {
+        if(in_array(App::environment(), config('tracker.env_ignore'))) {
             return;
         }
 
-        if(App::runningInConsole() && !config('laratracker.console')) {
+        if(App::runningInConsole() && !config('tracker.console')) {
             return;
         }
 
-        if(App::runningUnitTests() && !config('laratracker.unit_test')) {
+        if(App::runningUnitTests() && !config('tracker.unit_test')) {
             return;
         }
 
         static::observe(ContextObserver::class);
     }
+
+    public abstract function getContextLabel();
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Panoscape\LaraTracker;
+namespace Panoscape\Tracker;
 use Illuminate\Support\Facades\Auth;
 
 class ContextObserver
@@ -15,12 +15,8 @@ class ContextObserver
     {   
         if(!$this->filter('created')) return;
 
-        $name = null;
-        if($context instanceof Recordable) {
-            $name = $context->getContextLabel();
-        }
         $context->morphMany(Record::class, 'context')->create([
-            'message' => trans('laratracker::laratracker.created', ['context' => $this->getContextTypeName($context), 'name' => $name]),
+            'message' => trans('tracker::tracker.created', ['context' => $this->getContextTypeName($context), 'name' => $context->getContextLabel()]),
             'agent_id' => $this->getCurrentAgentID(),
             'agent_type' => $this->getCurrentAgentType(),
             'performed_at' => time(),
@@ -37,11 +33,6 @@ class ContextObserver
     {
         if(!$this->filter('updating')) return;
 
-        $name = null;
-        if($context instanceof Recordable) {
-            $name = $context->getContextLabel();
-        }
-
         /*
         * Gets the context's altered values and tracks what had changed
         */
@@ -52,7 +43,7 @@ class ContextObserver
         }
             
         $context->morphMany(Record::class, 'context')->create([
-            'message' => trans('laratracker::laratracker.updating', ['context' => $this->getContextTypeName($context), 'name' => $name]),
+            'message' => trans('tracker::tracker.updating', ['context' => $this->getContextTypeName($context), 'name' => $context->getContextLabel()]),
             'meta' => $changed,
             'agent_id' => $this->getCurrentAgentID(),
             'agent_type' => $this->getCurrentAgentType(),
@@ -70,12 +61,8 @@ class ContextObserver
     {
         if(!$this->filter('deleting')) return;
 
-        $name = null;
-        if($context instanceof Recordable) {
-            $name = $context->getContextLabel();
-        }
         $context->morphMany(Record::class, 'context')->create([
-            'message' => trans('laratracker::laratracker.deleting', ['context' => $this->getContextTypeName($context), 'name' => $name]),
+            'message' => trans('tracker::tracker.deleting', ['context' => $this->getContextTypeName($context), 'name' => $context->getContextLabel()]),
             'agent_id' => $this->getCurrentAgentID(),
             'agent_type' => $this->getCurrentAgentType(),
             'performed_at' => time(),
@@ -92,12 +79,8 @@ class ContextObserver
     {
         if(!$this->filter('restored')) return;
 
-        $name = null;
-        if($context instanceof Recordable) {
-            $name = $context->getContextLabel();
-        }
         $context->morphMany(Record::class, 'context')->create([
-            'message' => trans('laratracker::laratracker.restored', ['context' => $this->getContextTypeName($context), 'name' => $name]),
+            'message' => trans('tracker::tracker.restored', ['context' => $this->getContextTypeName($context), 'name' => $context->getContextLabel()]),
             'agent_id' => $this->getCurrentAgentID(),
             'agent_type' => $this->getCurrentAgentType(),
             'performed_at' => time(),
@@ -107,7 +90,7 @@ class ContextObserver
     protected function getContextTypeName($context)
     {
         $class = class_basename($context);
-        $key = 'laratracker::laratracker.'.snake_case($class);
+        $key = 'tracker::tracker.'.snake_case($class);
         $value =  trans($key);
 
         return $key == $value ? $class : $value;
@@ -126,14 +109,14 @@ class ContextObserver
     protected function filter($action)
     {
         if(!Auth::check()) {
-            if(in_array('nobody', config('laratracker.agent_ignore'))) {
+            if(in_array('nobody', config('tracker.agent_ignore'))) {
                 return false;
             }
         }
-        elseif(in_array(get_class(Auth::user()), config('laratracker.agent_ignore'))) {
+        elseif(in_array(get_class(Auth::user()), config('tracker.agent_ignore'))) {
             return false;
         }
 
-        return in_array($action, config('laratracker.operations'));
+        return in_array($action, config('tracker.operations'));
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLaratrackerMigration extends Migration
+class CreateTrackerTables extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateLaratrackerMigration extends Migration
      */
     public function up()
     {
-        Schema::create('laratracker_records', function (Blueprint $table) {
+        Schema::create('tracker_records', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->morphs('context');
             $table->integer('agent_id')->unsigned()->nullable();
@@ -31,6 +31,6 @@ class CreateLaratrackerMigration extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('laratracker_records');
+        Schema::dropIfExists('tracker_records');
     }
 }

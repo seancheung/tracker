@@ -4,7 +4,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Laratracker Language Lines
+    | Tracker Language Lines
     |--------------------------------------------------------------------------
     |
     | The following language lines are used across application for various
@@ -13,11 +13,11 @@ return [
     |
     */
 
-    'created' => '创建新的:context :name',
+    'created' => 'Created new :context :name',
 
-    'updating' => '更新:context :name',
+    'updating' => 'Updating :context :name',
 
-    'deleting' => '删除:context :name',
+    'deleting' => 'Deleting :context :name',
 
-    'restored' => '恢复:context :name',
+    'restored' => 'Restored :context :name',
 ];
